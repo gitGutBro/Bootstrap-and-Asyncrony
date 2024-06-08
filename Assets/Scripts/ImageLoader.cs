@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ImageLoader
 {
-    public async void TryLoadImage(string URL, Image imageComponent)
+    public async void TryLoad(string URL, Image imageComponent)
     {
         Texture2D texture = await GetTextureFromURL(URL);
 

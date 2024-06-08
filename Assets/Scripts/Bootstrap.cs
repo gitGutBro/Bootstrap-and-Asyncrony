@@ -7,14 +7,18 @@ public class Bootstrap : MonoBehaviour
     [SerializeField] private Image _image;
 
     private ImageLoader _imageLoader;
+    private ResourceLoader _resourceLoader;
 
     private void Awake()
     {
         _imageLoader = new();
+        _resourceLoader = new();
     }
 
-    private void Start()
+    private async void Start()
     {
-        _imageLoader.TryLoadImage(_URL, _image);
+        _imageLoader.TryLoad(_URL, _image);
+        GameObject gameObject = await _resourceLoader.TryLoad("Resource");
+        print(gameObject.name);
     }
 }
