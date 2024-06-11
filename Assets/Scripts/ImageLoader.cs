@@ -1,18 +1,17 @@
-using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ImageLoader
 {
-    public async void TryLoad(string URL, Image imageComponent)
+    public async UniTask<Sprite> GetLoadedSprite(string URL)
     {
         Texture2D texture = await GetTextureFromURL(URL);
-
+        Debug.Log(texture);
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-        imageComponent.sprite = sprite;
+        return sprite;
     }
 
     private async Task<Texture2D> GetTextureFromURL(string URL, int width = 2, int height = 2)

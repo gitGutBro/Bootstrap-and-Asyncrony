@@ -17,7 +17,7 @@ public class Bootstrap : MonoBehaviour
 
     private async void Start()
     {
-        _imageLoader.TryLoad(_URL, _image);
+        _image.sprite = await _imageLoader.GetLoadedSprite(_URL);
         GameObject gameObject = await _resourceLoader.TryLoad("Resource");
         print(gameObject.name);
     }
