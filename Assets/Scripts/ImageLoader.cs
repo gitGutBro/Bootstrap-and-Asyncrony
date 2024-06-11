@@ -1,5 +1,6 @@
 using System;
-using System.Net;
+using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,24 +15,29 @@ public class ImageLoader
         imageComponent.sprite = sprite;
     }
 
-    private async Task<Texture2D> GetTextureFromURL(string URL)
+    private async Task<Texture2D> GetTextureFromURL(string URL, int width = 2, int height = 2)
     {
-        Texture2D texture = new(2, 2);
+        Texture2D texture = new(width, height);
 
-        using WebClient webClient = new();
+        using HttpClient httpClient = new();
+        HttpResponseMessage response = await httpClient.GetAsync(URL);
 
-        try
+        if (response.IsSuccessStatusCode == false)
         {
-            byte[] imageData = await webClient.DownloadDataTaskAsync(new Uri(URL));
+            Debug.LogError("Image load error");
+            return null;
+        }
 
-            if (ImageConversion.LoadImage(texture, imageData) == false)
-                texture = null;
-        }
-        catch (Exception e)
-        {
-            Debug.LogError(e.Message);
-        }
+        Stream imageStream = await response.Content.ReadAsStreamAsync();
+        texture.LoadImage(ReadFully(imageStream));
 
         return texture;
+    }
+
+    private byte[] ReadFully(Stream input)
+    {
+        using MemoryStream memoryStream = new();
+        input.CopyTo(memoryStream);
+        return memoryStream.ToArray();
     }
 }
