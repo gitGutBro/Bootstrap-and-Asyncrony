@@ -8,17 +8,19 @@ public class Bootstrap : MonoBehaviour
 
     private ImageLoader _imageLoader;
     private ResourceLoader _resourceLoader;
+    private ScenesSwitcher _scenesSwitcher;
 
     private void Awake()
     {
         _imageLoader = new();
         _resourceLoader = new();
+        _scenesSwitcher = new();
     }
 
     private async void Start()
     {
         _image.sprite = await _imageLoader.GetLoadedSprite(_URL);
         GameObject gameObject = await _resourceLoader.TryLoad("Resource");
-        print(gameObject.name);
+        _scenesSwitcher.LoadByIndexAsync(1);
     }
 }

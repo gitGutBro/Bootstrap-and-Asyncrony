@@ -9,7 +9,6 @@ public class ImageLoader
     public async UniTask<Sprite> GetLoadedSprite(string URL)
     {
         Texture2D texture = await GetTextureFromURL(URL);
-        Debug.Log(texture);
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
         return sprite;
     }
