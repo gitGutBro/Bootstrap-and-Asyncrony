@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class ResourceLoader
 {
-    public async UniTask<GameObject> TryLoad(string path) =>
-        await Resources.LoadAsync<GameObject>(path) as GameObject;
+    public async UniTask<GameObject> TryLoad(string path)
+    {
+        var result = Resources.LoadAsync<GameObject>(path);
+        return await result as GameObject;
+    }
 }

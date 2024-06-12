@@ -21,6 +21,7 @@ public class Bootstrap : MonoBehaviour
     {
         _image.sprite = await _imageLoader.GetLoadedSprite(_URL);
         GameObject gameObject = await _resourceLoader.TryLoad("Resource");
+        print(gameObject);
         _scenesSwitcher.SwitchByIndexAsync();
     }
 }
