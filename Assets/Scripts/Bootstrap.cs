@@ -29,11 +29,11 @@ public class Bootstrap : MonoBehaviour
 
         _scenesSwitcher.SwitchByIndexAsync();
 
-        CancellationTokenSource token = new();
-
         UniTask.RunOnThreadPool(async () =>
         {
-            _calculator.StartCalculator(token.Token);
+            CancellationTokenSource token = new();
+            _calculator.StartCalculatorAsync(token.Token);
+            print(token.Token.GetHashCode() + "Мы тут");
             await UniTask.Delay(1000);
             token.Cancel();
         });

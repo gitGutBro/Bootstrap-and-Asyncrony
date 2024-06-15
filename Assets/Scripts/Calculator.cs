@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Calculator
 {
-    public async void StartCalculator(CancellationToken cancellationToken)
+    public async UniTask StartCalculatorAsync(CancellationToken cancellationToken)
     {
         while (cancellationToken.IsCancellationRequested == false)
         {
-            float result = await Calculate(Tools.Random(1, 10), Tools.Random(20, 30));
+            Debug.Log(cancellationToken.GetHashCode());
+            float result = Calculate(Tools.Random(1, 10), Tools.Random(20, 30));
             Debug.Log(result);
+
+            await UniTask.Yield();
         }
     }
 
-    private async UniTask<float> Calculate(float leftOperand, float rightOperand) => 
-        await UniTask.FromResult(leftOperand + rightOperand);
+    private float Calculate(float leftOperand, float rightOperand) => 
+        leftOperand + rightOperand;
 }
