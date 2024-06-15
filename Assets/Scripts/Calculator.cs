@@ -6,7 +6,7 @@ public class Calculator
 {
     public async void StartCalculator(CancellationToken cancellationToken)
     {
-        while (true)
+        while (cancellationToken.IsCancellationRequested == false)
         {
             float result = await Calculate(Tools.Random(1, 10), Tools.Random(20, 30));
             Debug.Log(result);
