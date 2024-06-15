@@ -31,10 +31,11 @@ public class Bootstrap : MonoBehaviour
 
         CancellationTokenSource token = new();
 
-        UniTask.RunOnThreadPool(() => 
-            _calculator.StartCalculator(token.Token));
-
-        await UniTask.Delay(500);
-        token.Cancel();
+        UniTask.RunOnThreadPool(async () =>
+        {
+            _calculator.StartCalculator(token.Token);
+            await UniTask.Delay(1000);
+            token.Cancel();
+        });
     }
 }
